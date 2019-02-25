@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>IM</title>
+  </head>
+
+  <body>
+    <div class="container" style="padding-top:20px;">
+      <div class="panel panel-primary">
+        <div class="panel-body" id="content"></div>
+      </div>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="msg"
+        aria-describedby="sizing-addon1"
+        id="msg"
+      />
+
+      <button
+        type="button"
+        class="btn btn-lg btn-success btn-block"
+        onclick="emit()"
+      >
+        发送
+      </button>
+      <div
+        class="col-xs-2"
+        style="padding:0;height:40px;line-height:40px;text-align:center;"
+      ></div>
+
+      <br /><br />
+    </div>
+
+    <script
+      type="text/javascript"
+      src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"
+    ></script>
+
+    <script type="text/javascript" src="js/core.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
+</html>
