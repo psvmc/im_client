@@ -1,4 +1,3 @@
-//var socket = new WebSocket("ws://192.168.1.112:8080/SaitongImServer/init");
 var socket = new WebSocket("ws://127.0.0.1:8899/ws");
 
 $(function () {
@@ -10,6 +9,7 @@ function emit() {
 	text = replace_em(text);
 
 	var msg = {
+		"type": 1,
 		"text": text
 	};
 	msg = JSON.stringify(msg);
@@ -20,7 +20,7 @@ function emit() {
 	$("#msg").val("");
 }
 
-//查看结果
+//替换为HTML上的标签
 function replace_em(str) {
 	str = str.replace(/\</g, '&lt;');
 	str = str.replace(/\>/g, '&gt;');
@@ -32,18 +32,35 @@ function replace_em(str) {
 function listen() {
 
 	socket.onopen = function () {
-		$("#content").append("<kbd>连接成功!</kbd></br>");
+		$("#content").append("<kbd>连接成功! 时间(s):"+ parseInt(new Date().getTime()/1000) +"</kbd></br>");
+		heartCheck();
 	};
 	socket.onmessage = function (evt) {
 		$("#content").append(evt.data + "</br>");
 	};
 	socket.onclose = function (evt) {
-		$("#content").append("<kbd>" + "Close!" + "</kbd></br>");
+		$("#content").append("<kbd>" + "连接关闭! 时间(s):" + parseInt(new Date().getTime()/1000) + "</kbd></br>");
 	}
 	socket.onerror = function (evt) {
 		$("#content").append("<kbd>" + "ERROR!" + "</kbd></br>");
 	}
 }
+
+//心跳包
+function heartCheck(){
+	setInterval(function () { 
+		if(socket){
+			var msg = {
+				"type": 0
+			};
+			msg = JSON.stringify(msg);
+			socket.send(msg);
+			console.info("发送心跳",msg+" 时间(s):"+ parseInt(new Date().getTime()/1000));
+		}
+		
+	}, 40000);
+}
+
 
 document.onkeydown = function (event) {
 	var e = event || window.event || arguments.callee.caller.arguments[0];
