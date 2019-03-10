@@ -7,14 +7,7 @@ $(function () {
 function emit() {
 	var text = encodeScript($("#msg").val());
 	text = replace_em(text);
-
-	var msg = {
-		"type": 1,
-		"text": text
-	};
-	msg = JSON.stringify(msg);
-
-	socket.send(msg);
+	socket.send(text);
 
 	$("#content").append("<kbd style='color: #" + "CECECE" + "; font-size: " + 12 + ";'>" + text + "</kbd><br/>");
 	$("#msg").val("");
